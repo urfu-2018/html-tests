@@ -16,5 +16,6 @@ results
 atlassian-ide-plugin.xml
 
 npm-debug.log
+package-lock.json
 
 node_modules
