@@ -1,5 +1,5 @@
 # Общие тесты для HTML кода
-[![Build Status](https://travis-ci.org/urfu-2015/html-test-suite.svg)](https://travis-ci.org/urfu-2018/html-tests)
+[![Build Status](https://travis-ci.org/urfu-2015/html-tests.svg)](https://travis-ci.org/urfu-2018/html-tests)
 
 ## Использование
 Добавить в `package.json` в секцию `scripts`:  
