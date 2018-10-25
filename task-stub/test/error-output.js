@@ -1,4 +1,6 @@
-module.exports = function(pattern, message, html) {
+'use strict';
+
+module.exports = function (pattern, message, html) {
     console.log('');
 
     html = html || require('./getHtml');
@@ -6,7 +8,7 @@ module.exports = function(pattern, message, html) {
 
     var currentLine = 1;
 
-    matches.forEach(function(match){
+    matches.forEach(function (match) {
         var idx = html.indexOf(match);
 
         var htmlBeforeMatch = html.substr(0, idx);

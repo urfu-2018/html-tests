@@ -1,3 +1,5 @@
+'use strict';
+
 exports.tag = function (tag) {
     return new RegExp('<\\s*' + tag + '(\\s.*)?>', 'g');
 };
@@ -7,11 +9,11 @@ exports.tabs = function () {
 };
 
 exports.spaceAfterTag = function () {
-    return new RegExp('<[^\/>]+>[^\\S\\r\\n]', 'g');
+    return new RegExp('<[^/>]+>[^\\S\\r\\n]', 'g');
 };
 
 exports.spaceBeforeClosingTag = function () {
-    return new RegExp('[^\\s]+[^\\S\\r\\n]<\/[-\\w]+>', 'ig');
+    return new RegExp('[^\\s]+[^\\S\\r\\n]</[-\\w]+>', 'ig');
 };
 
 exports.attrs = function (attr) {

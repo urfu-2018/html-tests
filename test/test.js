@@ -1,5 +1,3 @@
-/* global describe, it, global */
-
 'use strict';
 
 require('should');
@@ -9,7 +7,6 @@ var utils = require('../task-stub/test/staff/utils');
 var fs = require('fs');
 
 var largeHtml = fs.readFileSync('test/html/large.html', 'utf-8');
-
 
 describe('Пустые строки.', function () {
     it('Должны обнаруживаться две пустые строки подряд.', function () {

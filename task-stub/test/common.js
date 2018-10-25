@@ -1,5 +1,3 @@
-/* global describe, it, global */
-
 'use strict';
 
 require('should');

@@ -1,5 +1,3 @@
-/* global describe, it, global */
-
 'use strict';
 
 require('should');
@@ -10,7 +8,7 @@ files = files.filter(file => {
     return fs.statSync(file).isFile() && /\.html$/.test(file);
 });
 
-describe('Кол-во html файлов', function(){
+describe('Кол-во html файлов', function () {
     it('Должен быть один html-файл в проекте', function () {
         files.length.should.be.eql(1);
     });
