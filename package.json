@@ -17,6 +17,27 @@
   },
   "devDependencies": {
     "eslint": "5.7.0",
-    "eslint-config-hrundel": "1.4.0"
+    "eslint-config-iddqd": "1.2.0"
+  },
+  "eslintConfig": {
+    "extends": "iddqd/node",
+    "env": {
+      "mocha": true
+    },
+    "rules": {
+      "global-require": 0,
+      "max-len": [
+        2,
+        120
+      ],
+      "max-nested-callbacks": [
+        2,
+        4
+      ],
+      "max-params": [
+        2,
+        4
+      ]
+    }
   }
 }

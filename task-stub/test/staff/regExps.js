@@ -1,7 +1,7 @@
 'use strict';
 
 exports.tag = function (tag) {
-    return new RegExp('<\\s*' + tag + '(\\s.*)?>', 'g');
+    return new RegExp(`<\\s*${tag}(\\s.*)?>`, 'g');
 };
 
 exports.tabs = function () {
@@ -17,7 +17,7 @@ exports.spaceBeforeClosingTag = function () {
 };
 
 exports.attrs = function (attr) {
-    return new RegExp('<.+' + attr + '\\s*=[^<>]*>', 'g');
+    return new RegExp(`<.+${attr}\\s*=[^<>]*>`, 'g');
 };
 
 exports.spaceAfterLessSign = function () {
@@ -29,7 +29,7 @@ exports.spaceBeforeLessSign = function () {
 };
 
 exports.maxLineLength = function (length) {
-    return new RegExp('[^\\n]{' + length + '}', 'g');
+    return new RegExp(`[^\\n]{${length}}`, 'g');
 };
 
 exports.spaceBeforeEquals = function () {

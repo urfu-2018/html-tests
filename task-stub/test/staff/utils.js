@@ -1,6 +1,6 @@
 'use strict';
 
-var blockElements = [
+const blockElements = [
     'address', 'article', 'aside', 'blockquote', 'canvas', 'dd', 'div', 'dl',
     'fieldset', 'figcaption', 'figure',
     'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup',
@@ -8,7 +8,7 @@ var blockElements = [
     'ol', 'output', 'p', 'pre', 'section', 'table', 'tfoot', 'ul', 'video'
 ];
 
-var inlineElements = [
+const inlineElements = [
     'b', 'big', 'i', 'small', 'tt', 'abbr', 'cite', 'code', 'dfn', 'em', 'kbd',
     'strong', 'samp', 'var', 'a', 'bdo',
     'br', 'img', 'map', 'object', 'q', 'script', 'span', 'sub', 'sup', 'button',
@@ -16,27 +16,28 @@ var inlineElements = [
     'image'
 ];
 
-var emptyElements = [
+const emptyElements = [
     'link', ' track', 'param', 'area', 'command', 'col', 'base', 'meta', 'hr',
     'source', 'img', 'keygen', 'br', 'wbr', 'input'
 ];
 
-var error = require('../error-output');
+const error = require('../error-output');
 
 exports.wrongSpacesChecker = function (html, showMessage) {
-    var found = 0;
+    let found = 0;
 
-    html.split('\n').forEach(function (line, i) {
-        var spaces = line.match(/^[^\t\S]+/);
+    html.split('\n').forEach((line, i) => {
+        const spaces = line.match(/^[^\t\S]+/);
+
         if (!spaces) {
             return;
         }
 
         if (spaces[0].length % 4 !== 0) {
-            found++;
+            found += 1;
 
             if (showMessage) {
-                console.error('    Ошибка. Строка ' + (i + 1) + '. Кол-во пробелов в отступе не кратно четырем.');
+                console.error(`    Ошибка. Строка ${i + 1}. Кол-во пробелов в отступе не кратно четырем.`);
             }
         }
     });
@@ -45,16 +46,17 @@ exports.wrongSpacesChecker = function (html, showMessage) {
 };
 
 exports.getClosedEmptyElements = function (html, showMessage) {
-    var found = 0;
+    let found = 0;
 
-    emptyElements.forEach(function (emptyElem) {
-        var pattern = new RegExp('<\\s*' + emptyElem + '[^>/]*/>', 'g');
+    emptyElements.forEach(emptyElem => {
+        const pattern = new RegExp(`<\\s*${emptyElem}[^>/]*/>`, 'g');
 
         if (pattern.test(html)) {
-            found ++;
+            found += 1;
 
             if (showMessage !== false) {
-                var msg = 'Закрытый одиночный тег ' + emptyElem + '.';
+                const msg = `Закрытый одиночный тег ${emptyElem}.`;
+
                 error(pattern, msg, html);
             }
         }
@@ -64,31 +66,31 @@ exports.getClosedEmptyElements = function (html, showMessage) {
 };
 
 exports.getBlockInsideInline = function (html, showMessage) {
-    var msg = showMessage !== false ? 'Строчный тег {{elem}}, в который вложен блочный {{prohibited}}.' : false;
+    const msg = showMessage === false ? false : 'Строчный тег {{elem}}, в который вложен блочный {{prohibited}}.';
 
     return checkIncorrectBlocksLocation(html, inlineElements, blockElements, msg);
 };
 
 exports.getBlockInsideP = function (html, showMessage) {
-    var msg = showMessage !== false ? 'Блочный элемент {{prohibited}} внутри тега <p>.' : false;
+    const msg = showMessage === false ? false : 'Блочный элемент {{prohibited}} внутри тега <p>.';
 
     return checkIncorrectBlocksLocation(html, ['p'], blockElements, msg);
 };
 
 exports.findImagesWithoutAlt = function (html, showMessage) {
-    var pattern = /<\s*img[^>]*>/ig;
-    var images = html.match(pattern) || [];
-    var found = 0;
+    const pattern = /<\s*img[^>]*>/ig;
+    const images = html.match(pattern) || [];
+    let found = 0;
 
-    images.forEach(function (image) {
-        var hasAlt = /\salt=(?!(""|''))/.test(image);
+    images.forEach(image => {
+        const hasAlt = /\salt=(?!(""|''))/.test(image);
 
         if (!hasAlt) {
             if (showMessage !== false) {
                 error(pattern, 'Картинка с отсутствующим или пустым атрибутом alt.', html);
             }
 
-            found++;
+            found += 1;
         }
     });
 
@@ -96,20 +98,20 @@ exports.findImagesWithoutAlt = function (html, showMessage) {
 };
 
 function checkIncorrectBlocksLocation(html, parents, prohibitedChildren, message) {
-    var count = 0;
+    let count = 0;
 
-    parents.forEach(function (elem) {
-        prohibitedChildren.forEach(function (prohibited) {
+    parents.forEach(elem => {
+        prohibitedChildren.forEach(prohibited => {
 
-            var pattern = new RegExp('<\\s*' + elem + '[^><]*>[^<]*<\\s*(' + prohibited +
-                ')[^>]*>.*</\\1>.*</' + elem + '>', 'g');
+            const pattern = new RegExp(`<\\s*${elem}[^><]*>[^<]*<\\s*(${prohibited
+            })[^>]*>.*</\\1>.*</${elem}>`, 'g');
 
             if (pattern.test(html)) {
-                count ++;
+                count += 1;
 
                 if (message) {
-                    message = message.replace('{{elem}}', '<' + elem + '>');
-                    message = message.replace('{{prohibited}}', '<' + prohibited + '>');
+                    message = message.replace('{{elem}}', `<${elem}>`);
+                    message = message.replace('{{prohibited}}', `<${prohibited}>`);
                     error(pattern, message, html);
                 }
             }

@@ -2,15 +2,15 @@
 
 require('should');
 
-var html = require('./getHtml');
-var error = require('./error-output');
-var regExps = require('./staff/regExps');
-var utils = require('./staff/utils');
+const html = require('./getHtml');
+const error = require('./error-output');
+const regExps = require('./staff/regExps');
+const utils = require('./staff/utils');
 
-describe('Сodestyle.', function () {
-    it('Не должно быть пробелов после открывающих тегов.', function () {
-        var pattern = regExps.spaceAfterTag();
-        var hasViolation = pattern.test(html);
+describe('Сodestyle.', () => {
+    it('Не должно быть пробелов после открывающих тегов.', () => {
+        const pattern = regExps.spaceAfterTag();
+        const hasViolation = pattern.test(html);
 
         if (hasViolation) {
             error(pattern, 'Открывающий тег, после которого стоит пробел.');
@@ -19,9 +19,9 @@ describe('Сodestyle.', function () {
         hasViolation.should.be.eql(false);
     });
 
-    it('Не должно быть пробелов перед закрывающими тегами.', function () {
-        var pattern = regExps.spaceBeforeClosingTag();
-        var hasViolation = pattern.test(html);
+    it('Не должно быть пробелов перед закрывающими тегами.', () => {
+        const pattern = regExps.spaceBeforeClosingTag();
+        const hasViolation = pattern.test(html);
 
         if (hasViolation) {
             error(pattern, 'Лишний пробел после слова, за которым идет закрывающий тег.');
@@ -30,9 +30,9 @@ describe('Сodestyle.', function () {
         hasViolation.should.be.eql(false);
     });
 
-    it('Не должно быть пробелов после символа <.', function () {
-        var pattern = regExps.spaceAfterLessSign();
-        var hasViolation = pattern.test(html);
+    it('Не должно быть пробелов после символа <.', () => {
+        const pattern = regExps.spaceAfterLessSign();
+        const hasViolation = pattern.test(html);
 
         if (hasViolation) {
             error(pattern, 'Лишний пробел после символа "<".');
@@ -41,9 +41,9 @@ describe('Сodestyle.', function () {
         hasViolation.should.be.eql(false);
     });
 
-    it('Не должно быть пробелов перед символом >.', function () {
-        var pattern = regExps.spaceBeforeLessSign();
-        var hasViolation = pattern.test(html);
+    it('Не должно быть пробелов перед символом >.', () => {
+        const pattern = regExps.spaceBeforeLessSign();
+        const hasViolation = pattern.test(html);
 
         if (hasViolation) {
             error(pattern, 'Лишний пробел после символа "<".');
@@ -52,10 +52,10 @@ describe('Сodestyle.', function () {
         hasViolation.should.be.eql(false);
     });
 
-    describe('Использование и оформление атрибутов.', function () {
-        it('Не должно быть пробелов после = при использовании атрибутов.', function () {
-            var pattern = regExps.spaceAfterEquals();
-            var hasViolation = pattern.test(html);
+    describe('Использование и оформление атрибутов.', () => {
+        it('Не должно быть пробелов после = при использовании атрибутов.', () => {
+            const pattern = regExps.spaceAfterEquals();
+            const hasViolation = pattern.test(html);
 
             if (hasViolation) {
                 error(pattern, 'Пробел после "=".');
@@ -64,9 +64,9 @@ describe('Сodestyle.', function () {
             hasViolation.should.be.eql(false);
         });
 
-        it('Не должно быть пробелов перед = при использовании атрибутов.', function () {
-            var pattern = regExps.spaceBeforeEquals();
-            var hasViolation = pattern.test(html);
+        it('Не должно быть пробелов перед = при использовании атрибутов.', () => {
+            const pattern = regExps.spaceBeforeEquals();
+            const hasViolation = pattern.test(html);
 
             if (hasViolation) {
                 error(pattern, 'Пробел перед "=".');
@@ -76,9 +76,9 @@ describe('Сodestyle.', function () {
         });
     });
 
-    it('Не должно быть двух и более идущих подряд пустых строк.', function () {
-        var pattern = regExps.twoLineBreaksInARow();
-        var hasViolation = pattern.test(html);
+    it('Не должно быть двух и более идущих подряд пустых строк.', () => {
+        const pattern = regExps.twoLineBreaksInARow();
+        const hasViolation = pattern.test(html);
 
         if (hasViolation) {
             error(pattern, 'После нее идут две или более пустые строки.');
@@ -87,12 +87,12 @@ describe('Сodestyle.', function () {
         hasViolation.should.be.eql(false);
     });
 
-    describe('Проверка корректности вложенности блоков.', function () {
-        it('Не должно быть блочных тегов внутри строчных.', function () {
+    describe('Проверка корректности вложенности блоков.', () => {
+        it('Не должно быть блочных тегов внутри строчных.', () => {
             utils.getBlockInsideInline(html).should.be.eql(0);
         });
 
-        it('Не должно быть блочных тегов внутри параграфов (<p>).', function () {
+        it('Не должно быть блочных тегов внутри параграфов (<p>).', () => {
             utils.getBlockInsideP(html).should.be.eql(0);
         });
     });
